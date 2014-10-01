@@ -1,0 +1,50 @@
+import pytumblr
+import random as rand
+
+log_file = open("/path/to/log/file/log.txt", "r+")
+
+def setup():
+	# Authenticate via OAuth
+	client = pytumblr.TumblrRestClient(
+		'X', 
+		'X', 
+		'X', 
+		'X'
+		)
+	return client
+
+def getQuote(client):
+	#open the quotes text file to pull a quote
+	quotes_file = open("/path/to/quotes/file/quotes.txt", "r")
+	lines = quotes_file.readlines()
+	quoteText = (rand.choice(lines))
+	quotes_file.close()
+
+	checkQuote(quoteText)
+
+	return quoteText
+
+
+def checkQuote(quoteText):
+	usedQuotes_file = open("/path/to/used/quotes/file/usedQuotes.txt", "r+")
+	usedLines = usedQuotes_file.readlines()
+	if quoteText not in usedLines:
+		quoteText = quoteText
+		usedQuotes_file.write(quoteText)
+	else:
+		getQuote(s)
+	
+	usedQuotes_file.close()
+	
+log_file.write("starting job \n")
+s = setup()
+log_file.write("client opened \n")
+doQuote = getQuote(s)
+log_file.write("got quote \n")
+#print doQuote
+s.create_quote('someTumblr.tumblr.com', quote=doQuote)
+log_file.write("posted to tumblr \n")
+log_file.write("Done! \n")
+log_file.close()
+
+
